@@ -1,6 +1,13 @@
 import logging
 
+from job_spy import scra
+from _common.gcs import GCSClient
+
 PROJECT_ID = "gcp-practice"
+JOBS_BUCKET = "gcppractice_scratch_data/jobs"
+VALID_SOURCES = ""
+DEFAULT_COUNTRY = "USA"
+
 logging.basicConfig(format="%(asctime)s - %(message)s", level=logging.INFO)
 LOGGER = logging.getLogger(__name__)
 
@@ -21,8 +28,8 @@ class ExtractionHandler:
         search_term: str,
         location: str,
         results_wanted: int = 10,
-        country_indeed: str = "USA",
-        country_glassdoor: str = "USA",
+        country_indeed: str = DEFAULT_COUNTRY,
+        country_glassdoor: str = DEFAULT_COUNTRY,
         **scrape_params,
     ) -> list:
         """Scrapes job postings from various job boards
