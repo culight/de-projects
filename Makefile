@@ -4,6 +4,7 @@ default:
 scaffold:
 	@echo "Enter project name: "; \
 	read projectName; \
+	
 	echo "Creating scaffold for $$projectName"...  \
 	echo "Scaffold created for $$projectName."
 delete:
