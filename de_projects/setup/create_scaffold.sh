@@ -21,6 +21,7 @@ if [ "$PROJECT_EXISTS" = false ]; # project does not exist, create scaffolding f
             touch "orchestration/$PROJECT_NAME/__init__.py"
             # scripts
             mkdir "scripts/$PROJECT_NAME"
+            mkdir "scripts/$PROJECT_NAME/validation"
             touch "scripts/$PROJECT_NAME/__init__.py"
             # tests
             mkdir "tests/$PROJECT_NAME"
