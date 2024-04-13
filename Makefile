@@ -4,15 +4,14 @@ default:
 scaffold:
 	@echo "Enter project name: "; \
 	read projectName; \
-	
-	echo "Creating scaffold for $$projectName"...  \
-	echo "Scaffold created for $$projectName."
+	source de_projects/setup/create_scaffold.sh $$projectName;
 delete:
 	@echo "Enter project name: "; \
 	read projectName; \
 	read -p "Are you sure you want to delete $$projectName? (y/n): " confirm; \
-	echo "Answer was $$confirm"; \
-	echo "$$projectName deleted."
+	if [ $$confirm = "y" ]; then \
+		source de_projects/setup/delete_scaffold.sh $$projectName; \
+	fi
 lint:
 	@read -p "Enter project name: " projectName;
 	echo "Linting $$projectName..."; \
