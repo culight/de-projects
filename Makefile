@@ -12,6 +12,10 @@ delete:
 	if [ $$confirm = "y" ]; then \
 		source de_projects/setup/delete_scaffold.sh $$projectName; \
 	fi
+build:
+	@read -p "Enter project name: " projectName;
+	echo "Building $$projectName..."; \
+	echo "$$projectName built."
 lint:
 	@read -p "Enter project name: " projectName;
 	echo "Linting $$projectName..."; \
