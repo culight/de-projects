@@ -1,6 +1,6 @@
 import logging
 
-from job_spy import scra
+from job_spy import scrape_jobs
 from _common.gcs import GCSClient
 
 PROJECT_ID = "gcp-practice"
