@@ -5,13 +5,13 @@ help: ## shows help message
 scaffold: ## create a new project scaffold
 	@echo "Enter project name: "; \
 	read projectName; \
-	source de_projects/setup/create_scaffold.sh $$projectName;
+	source de_projects/create_scaffold.sh $$projectName;
 delete: ## deletes a project scaffold
 	@echo "Enter project name: "; \
 	read projectName; \
 	read -p "Are you sure you want to delete $$projectName? (y/n): " confirm; \
 	if [ $$confirm = "y" ]; then \
-		source de_projects/setup/delete_scaffold.sh $$projectName; \
+		source de_projects/delete_scaffold.sh $$projectName; \
 	fi
 build: ## build a project to be run
 	@echo "Enter project name: "; \
