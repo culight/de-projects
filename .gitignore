@@ -162,3 +162,7 @@ cython_debug/
 
 # Dagster file
 tmp*
+*/data/*
+
+# local
+.DS_Store

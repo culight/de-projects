@@ -1,54 +1,38 @@
+.PHONY: test
 
-default:
-	.SILENT: help.Makefile
-scaffold:
+help: ## shows help message
+	@awk 'BEGIN {FS = ":.*##"; printf "\nUsage:\n  make \033[36m\033[0m\n"} /^[$$()% a-zA-Z_-]+:.*?##/ { printf "  \033[36m%-15s\033[0m %s\n", $$1, $$2 } /^##@/ { printf "\n\033[1m%s\033[0m\n", substr($$0, 5) } ' $(MAKEFILE_LIST)
+scaffold: ## create a new project scaffold
 	@echo "Enter project name: "; \
 	read projectName; \
-	echo "Creating scaffold for $$projectName"...  \
-	echo "Scaffold created for $$projectName."
-delete:
+	source de_projects/create_scaffold.sh $$projectName;
+delete: ## deletes a project scaffold
 	@echo "Enter project name: "; \
 	read projectName; \
 	read -p "Are you sure you want to delete $$projectName? (y/n): " confirm; \
-	echo "Answer was $$confirm"; \
-	echo "$$projectName deleted."
-lint:
-	@read -p "Enter project name: " projectName;
-	echo "Linting $$projectName..."; \
-	# CHECK IF PROJECT EXISTS
-	# 	IF EXISTS, LINT PROJECT
-	# 	IF NOT, EXIT
-	echo "$$projectName linted."
-lint-all:
-	echo "Linting all projects..." \
-	# CHECK IF PROJECTS EXIST
-		# IF EXISTS, LINT PROJECTS
-		# IF NOT, EXIT
-	echo "All projects linted."
-clean:
-	@read -p "Enter project name: " projectName;
+	if [ $$confirm = "y" ]; then \
+		source de_projects/delete_scaffold.sh $$projectName; \
+	fi
+list: ## list all projects
+	@echo "Listing all projects..."; \
+	cd operation
+	ls -d */
+build: ## build a project to be run
+	@echo "Enter project name: "; \
+	read projectName; \
+	echo "Building project $$projectName..."; \
+	docker build . -t $$projectName -f operation/$$projectName/Dockerfile --build-arg PROJECT_NAME=$$projectName; \
+	echo "";
+lint: ## perform linting on a project
+	@echo "Enter project name: "; \
+	read projectName; \
+	echo "Linting $$projectName...";
+clean: ## clean up a project
+	@echo "Enter project name: "; \
+	read projectName; \
 	echo "Cleaning up project $$projectName...";
-	# CHECK IF PROJECT EXISTS
-	# 	IF EXISTS, CLEAN PROJECT
-	# 	IF NOT, EXIT
-	echo "$$projectName project cleaned."
-clean-all:
-	@read -p "Are you sure you want to clean up all projects? (y/n): " confirm; \
-	echo "Cleaning up all projects..." \
-	# CHECK IF PROJECTS EXIST
-		# IF EXISTS, CLEAN PROJECTS
-		# IF NOT, EXIT
-	echo "All projects cleaned."
-test:
-	@read -p "Enter project name: " projectName;
-	echo "Running tests for $$projectName...";
-	# CHECK IF PROJECT EXISTS
-	# 	IF EXISTS, RUN TESTS
-	# 	IF NOT, EXIT
-	echo "Tests for $$projectName ran successfully."
-test-all:
-	echo "Running tests for all projects..." \
-	# CHECK IF PROJECTS EXIST
-		# IF EXISTS, RUN TESTS
-		# IF NOT, EXIT
-	echo "All tests ran successfully."
+test: ## run tests on a project
+	@echo "Enter project name: "; \
+	read projectName; \
+	echo "Running tests for $$projectName..."; \
+

@@ -1,27 +1,31 @@
+import os
 import requests
 from . import constants
-import duckdb
-import os
 
 from dagster import asset
+import duckdb
+
 
 @asset
 def taxi_trips_file():
     """
-      The raw parquet files for the taxi trips dataset. Sourced from the NYC Open Data portal.
+    The raw parquet files for the taxi trips dataset. Sourced from the NYC Open Data portal.
     """
-    month_to_fetch = '2023-03'
+    month_to_fetch = "2023-03"
     raw_trips = requests.get(
         f"https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_{month_to_fetch}.parquet"
     )
 
-    with open(constants.TAXI_TRIPS_TEMPLATE_FILE_PATH.format(month_to_fetch), "wb") as output_file:
+    with open(
+        constants.TAXI_TRIPS_TEMPLATE_FILE_PATH.format(month_to_fetch), "wb"
+    ) as output_file:
         output_file.write(raw_trips.content)
+
 
 @asset
 def taxi_zones_file():
     """
-      The raw CSV file for the taxi zones dataset. Sourced from the NYC Open Data portal.
+    The raw CSV file for the taxi zones dataset. Sourced from the NYC Open Data portal.
     """
     raw_taxi_zones = requests.get(
         "https://data.cityofnewyork.us/api/views/755u-8jsi/rows.csv?accessType=DOWNLOAD"
@@ -30,12 +34,11 @@ def taxi_zones_file():
     with open(constants.TAXI_ZONES_FILE_PATH, "wb") as output_file:
         output_file.write(raw_taxi_zones.content)
 
-@asset(
-    deps=["taxi_trips_file"]
-)
+
+@asset(deps=["taxi_trips_file"])
 def taxi_trips():
     """
-      The raw taxi trips dataset, loaded into a DuckDB database
+    The raw taxi trips dataset, loaded into a DuckDB database
     """
     sql_query = """
         create or replace table trips as (
@@ -58,3 +61,18 @@ def taxi_trips():
     conn.execute(sql_query)
 
 
+@asset(deps=["taxi_zones_file"])
+def taxi_zones():
+    sql_query = f"""
+        create or replace table zones as (
+            select
+                LocationID as zone_id,
+                zone,
+                borough,
+                the_geom as geometry
+            from '{constants.TAXI_ZONES_FILE_PATH}'
+        );
+    """
+
+    conn = duckdb.connect(os.getenv("DUCKDB_DATABASE"))
+    conn.execute(sql_query)
