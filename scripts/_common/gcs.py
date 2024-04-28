@@ -1,2 +1,0 @@
-class GCSClient:
-    pass
