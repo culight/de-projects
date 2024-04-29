@@ -169,8 +169,11 @@ if [ "$PROJECT_EXISTS" = false ]; # project does not exist, create scaffolding f
             mkdir "$PROJECT_NAME/scripts"
             mkdir "$PROJECT_NAME/scripts/validation"
             touch "$PROJECT_NAME/scripts/__init__.py"
+            touch "$PROJECT_NAME/scripts/README.md"
             # tests
             mkdir "$PROJECT_NAME/tests"
+            touch "$PROJECT_NAME/tests/__init__.py"
+            touch "$PROJECT_NAME/tests/README.md"
             echo "Scaffolding created for $PROJECT_NAME"
     else
         echo "Project name is invalid"
