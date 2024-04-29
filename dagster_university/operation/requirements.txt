@@ -1,0 +1,6 @@
+pandas==2.2.2
+dagster~=1.6
+dagster-webserver==1.7.3
+plotly==5.21.0
+geopandas==0.14.4
+dagster-duckdb==0.23.3
