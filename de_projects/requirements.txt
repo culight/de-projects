@@ -1,4 +1,0 @@
-pandas==2.2.2
-pyspark==3.5.1
-pytest==8.1.1
-dagster~=1.6
