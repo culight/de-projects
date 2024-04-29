@@ -13,9 +13,6 @@ delete: ## deletes a project scaffold
 	if [ $$confirm = "y" ]; then \
 		source _setup/delete_scaffold.sh $$projectName; \
 	fi
-list: ## list all projects
-	@echo "Listing all projects..."; \
-	ls -d */
 build: ## build a project to be run
 	@echo "Enter project name: "; \
 	read projectName; \
