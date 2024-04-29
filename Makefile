@@ -19,6 +19,17 @@ build: ## build a project to be run
 	echo "Building project $$projectName..."; \
 	docker build . -t $$projectName -f $$projectName/operation/Dockerfile --build-arg PROJECT_NAME=$$projectName; \
 	echo "";
+run: ## run a project
+	@echo "Enter project name: "; \
+	read projectName; \
+	echo "Running project $$projectName..."; \
+	docker run -it --network="host" --rm $$projectName /bin/bash;
+start: ## start a project
+	@echo "Enter project name: "; \
+	read projectName; \
+	echo "Starting project $$projectName..."; \
+	docker build . -t $$projectName -f $$projectName/operation/Dockerfile --build-arg PROJECT_NAME=$$projectName; \
+	docker run -it --network host --rm $$projectName /bin/bash;
 lint: ## perform linting on a project
 	@echo "Enter project name: "; \
 	read projectName; \
