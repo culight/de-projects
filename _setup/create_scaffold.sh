@@ -162,6 +162,7 @@ if [ "$PROJECT_EXISTS" = false ]; # project does not exist, create scaffolding f
             touch "$PROJECT_NAME/operation/Dockerfile"
             touch "$PROJECT_NAME/operation/requirements.txt"
             mkdir "$PROJECT_NAME/operation/iac"
+            mkdir "$PROJECT_NAME/operation/auth"
             # orchestration
             mkdir "$PROJECT_NAME/orchestration"
             touch "$PROJECT_NAME/orchestration/__init__.py"
