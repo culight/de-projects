@@ -19,6 +19,14 @@ build: ## build a project to be run
 	echo "Building project $$projectName..."; \
 	docker build . -t $$projectName -f $$projectName/operation/Dockerfile --build-arg PROJECT_NAME=$$projectName; \
 	echo "";
+activate: ## activate a virtual environment for a project (expecting [project_name]/operation/.[project_name] directory)
+	@echo "Enter project name: "; \
+	read projectName; \
+	echo "Activating virtual environment for $$projectName..."; \
+	source $$projectName/operation/.$$projectName/bin/activate && exec bash
+deactivate: ## deactivate a virtual environment for a project
+	@echo "Deactivating virtual environment..."; \
+	deactivate && exec bash
 run: ## run a project
 	@echo "Enter project name: "; \
 	read projectName; \
