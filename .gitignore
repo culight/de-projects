@@ -169,4 +169,4 @@ tmp*
 .DS_Store
 
 # auth
-*/operation/auth
+auth/*

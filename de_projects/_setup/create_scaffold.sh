@@ -1,33 +1,32 @@
 #!/bin/bash
-
 PROJECT_NAME="$1"
 
 check_project_exists () {
     PROJECT_NAME="$1"
 
     # check operation dir
-    if [ -d "$PROJECT_NAME/operation" ]; then
+    if [ -d "de_projects/$PROJECT_NAME/operation" ]; then
         operation_exists=true
     else
         operation_exists=false
     fi
 
     # check orchestration dir
-    if [ -d "$PROJECT_NAME/orchestration" ]; then
+    if [ -d "de_projects/$PROJECT_NAME/orchestration" ]; then
         orchestration_exists=true
     else
         orchestration_exists=false
     fi
 
     # check scripts dir
-    if [ -d "$PROJECT_NAME/scripts" ]; then
+    if [ -d "de_projects/$PROJECT_NAME/scripts" ]; then
         scripts_exists=true
     else
         scripts_exists=false
     fi
 
     # check tests dir
-    if [ -d "$PROJECT_NAME/tests" ]; then
+    if [ -d "de_projects/$PROJECT_NAME/tests" ]; then
         tests_exists=true
     else
         tests_exists=false
@@ -47,10 +46,10 @@ check_project_exists () {
 
             echo ""
             echo "Some project components are missing:"
-            echo "  $PROJECT_NAME/operation: $operation_exists"
-            echo "  $PROJECT_NAME/orchestration: $orchestration_exists"
-            echo "  $PROJECT_NAME/scripts: $scripts_exists"
-            echo "  $PROJECT_NAME/tests: $tests_exists"
+            echo "  de_projects/$PROJECT_NAME/operation: $operation_exists"
+            echo "  de_projects/$PROJECT_NAME/orchestration: $orchestration_exists"
+            echo "  de_projects/$PROJECT_NAME/scripts: $scripts_exists"
+            echo "  de_projects/$PROJECT_NAME/tests: $tests_exists"
             echo ""
 
             echo "Would you like to recreate the missing components? (y/n) "
@@ -64,27 +63,27 @@ check_project_exists () {
             then
                 if [ "$operation_exists" = false ];
                 then
-                    mkdir "$PROJECT_NAME/operation"
-                    touch "$PROJECT_NAME/operation/Dockerfile"
-                    touch "$PROJECT_NAME/operation/requirements.txt"
-                    mkdir "$PROJECT_NAME/operation/iac"
+                    mkdir "de_projects/$PROJECT_NAME/operation"
+                    touch "de_projects/$PROJECT_NAME/operation/Dockerfile"
+                    touch "de_projects/$PROJECT_NAME/operation/requirements.txt"
+                    mkdir "de_projects/$PROJECT_NAME/operation/iac"
                 fi
 
                 if [ "$orchestration_exists" = false ];
                 then
-                    mkdir "$PROJECT_NAME/orchestration"
-                    touch "$PROJECT_NAME/orchestration/__init__.py"
+                    mkdir "de_projects/$PROJECT_NAME/orchestration"
+                    touch "de_projects/$PROJECT_NAME/orchestration/__init__.py"
                 fi
 
                 if [ "$scripts_exists" = false ];
                 then
-                    mkdir "$PROJECT_NAME/scripts"
-                    touch "$PROJECT_NAME/scripts/__init__.py"
+                    mkdir "de_projects/$PROJECT_NAME/scripts"
+                    touch "de_projects/$PROJECT_NAME/scripts/__init__.py"
                 fi
 
                 if [ "$tests_exists" = false ];
                 then
-                    mkdir "$PROJECT_NAME/tests"
+                    mkdir "de_projects/$PROJECT_NAME/tests"
                 fi
             fi
             echo "Scaffolding created for project $PROJECT_NAME"
@@ -150,20 +149,38 @@ check_project_name_isvalid () {
     fi
 }
 
-PROJECT_EXISTS=source $PROJECT_EXISTS_SCRIPT $PROJECT_NAME
+PROJECT_EXISTS=check_project_exists $PROJECT_NAME
+VALID_NAME=check_project_name_isvalid $PROJECT_NAME
 
-if [ "$PROJECT_EXISTS" = true ];
-    echo "Deleting scaffolding for $PROJECT_NAME..."
-    then   
-        # opeartion
-        rm -rf "$PROJECT_NAME/operation"
-        # orchestration
-        rm -rf "$PROJECT_NAME/orchestration"
-        # scripts
-        rm -rf "$PROJECT_NAME/scripts"
-        # tests
-        rm -rf "$PROJECT_NAME/tests"
-        # delete project directory
-        rm -rf "$PROJECT_NAME"
-        echo "Scaffolding deleted for $PROJECT_NAME"
+if [ "$PROJECT_EXISTS" = false ]; # project does not exist, create scaffolding for it
+    if [ "$VALID_NAME" = true ]; # project name is valid
+        echo "Creating scaffolding for $PROJECT_NAME..."
+        then
+            mkdir "de_projects/$PROJECT_NAME"
+            # opeartion
+            mkdir "de_projects/$PROJECT_NAME/operation"
+            touch "de_projects/$PROJECT_NAME/operation/Dockerfile"
+            touch "de_projects/$PROJECT_NAME/operation/requirements.txt"
+            mkdir "de_projects/$PROJECT_NAME/operation/iac"
+            mkdir "de_projects/$PROJECT_NAME/operation/auth"
+            # orchestration
+            mkdir "de_projects/$PROJECT_NAME/orchestration"
+            touch "de_projects/$PROJECT_NAME/orchestration/__init__.py"
+            # scripts
+            mkdir "de_projects/$PROJECT_NAME/scripts"
+            mkdir "de_projects/$PROJECT_NAME/scripts/validation"
+            touch "de_projects/$PROJECT_NAME/scripts/__init__.py"
+            touch "de_projects/$PROJECT_NAME/scripts/README.md"
+            # tests
+            mkdir "de_projects/$PROJECT_NAME/tests"
+            touch "de_projects/$PROJECT_NAME/tests/__init__.py"
+            touch "de_projects/$PROJECT_NAME/tests/README.md"
+            mkdir "de_projects/$PROJECT_NAME/tests/_sandbox"
+            touch "de_projects/$PROJECT_NAME/tests/_sandbox/$PROJECT_NAME.ipynb"
+            echo "Scaffolding created for $PROJECT_NAME"
+    else
+        echo "Project name is invalid"
+    fi
+    then 
+        echo ""
 fi
