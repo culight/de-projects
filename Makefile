@@ -23,7 +23,7 @@ activate: ## activate a virtual environment for a project (expecting [project_na
 	@echo "Enter project name: "; \
 	read projectName; \
 	echo "Activating virtual environment for $$projectName..."; \
-	source de_projects/$$projectName/operation/.$$projectName/bin/activate && exec bash
+	source de_projects/$$projectName/operation/venv/.$$projectName/bin/activate && exec bash
 deactivate: ## deactivate a virtual environment for a project
 	@echo "Deactivating virtual environment..."; \
 	deactivate && exec bash

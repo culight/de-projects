@@ -168,5 +168,8 @@ tmp*
 # local
 .DS_Store
 
-# auth
+# Ignore any authentication files
 auth/*
+
+# Ignore python virtual environment
+venv/*

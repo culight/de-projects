@@ -68,6 +68,8 @@ check_project_exists () {
                     touch "de_projects/$PROJECT_NAME/operation/Dockerfile"
                     touch "de_projects/$PROJECT_NAME/operation/requirements.txt"
                     mkdir "de_projects/$PROJECT_NAME/operation/iac"
+                    mkdir "de_projects/$PROJECT_NAME/operation/auth"
+                    mkdir "de_projects/$PROJECT_NAME/operation/venv"
                 fi
 
                 if [ "$orchestration_exists" = false ];

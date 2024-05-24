@@ -163,6 +163,7 @@ if [ "$PROJECT_EXISTS" = false ]; # project does not exist, create scaffolding f
             touch "de_projects/$PROJECT_NAME/operation/requirements.txt"
             mkdir "de_projects/$PROJECT_NAME/operation/iac"
             mkdir "de_projects/$PROJECT_NAME/operation/auth"
+            mkdir "de_projects/$PROJECT_NAME/operation/venv"
             # orchestration
             mkdir "de_projects/$PROJECT_NAME/orchestration"
             touch "de_projects/$PROJECT_NAME/orchestration/__init__.py"
