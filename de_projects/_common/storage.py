@@ -5,21 +5,11 @@ GCP_AUTH_FILE = os.getenv('df', default='GOOGLE_APPLICATION_CREDENTIALS')
 
 # ==============================================================================
 
-class StorageBase:
+class LocalStorageClient:
     def __init__(self):
         pass
 
-    def write_data(self, data, filename):
-        pass
-
-    def read_data(self, filename):
-        pass
-
-class LocalStorageClient(StorageBase):
-    def __init__(self, bucket_name):
-        super().__init__(bucket_name)
-
-class GCSClient(StorageBase):
+class GCSClient:
     def __init__(self, project: str, credentials: str):
         self.client = storage.Client(
             project=project,

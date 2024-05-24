@@ -13,15 +13,16 @@ LOGGER = logging.getLogger(__name__)
 
 # ==============================================================================
 
+        # self.project_id = project_id
+        # self.bucket_name = bucket_name
+        # self.gcs_client = GCSClient(
+        #     bucket_name=self.bucket_name, project_id=self.project_id
+        # )
 
 class ExtractionHandler:
-    def __init__(self, project_id: str = PROJECT_ID, bucket_name: str = JOBS_BUCKET):
-        self.project_id = project_id
-        self.bucket_name = bucket_name
-        self.gcs_client = GCSClient(
-            bucket_name=self.bucket_name, project_id=self.project_id
-        )
-
+    def __init__(self):
+        pass
+    
     def extract_jobs(
         self,
         site_name: str,
