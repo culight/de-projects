@@ -17,8 +17,16 @@ build: ## build a project to be run
 	@echo "Enter project name: "; \
 	read projectName; \
 	echo "Building project $$projectName..."; \
-	docker build . -t $$projectName -f $$projectName/operation/Dockerfile --build-arg PROJECT_NAME=$$projectName; \
+	docker build . -t $$projectName -f de_projects/$$projectName/operation/Dockerfile --build-arg PROJECT_NAME=$$projectName; \
 	echo "";
+activate: ## activate a virtual environment for a project (expecting [project_name]/operation/.[project_name] directory)
+	@echo "Enter project name: "; \
+	read projectName; \
+	echo "Activating virtual environment for $$projectName..."; \
+	source de_projects/$$projectName/operation/venv/.$$projectName/bin/activate && exec bash
+deactivate: ## deactivate a virtual environment for a project
+	@echo "Deactivating virtual environment..."; \
+	deactivate && exec bash
 run: ## run a project
 	@echo "Enter project name: "; \
 	read projectName; \
@@ -28,7 +36,7 @@ start: ## start a project
 	@echo "Enter project name: "; \
 	read projectName; \
 	echo "Starting project $$projectName..."; \
-	docker build . -t $$projectName -f $$projectName/operation/Dockerfile --build-arg PROJECT_NAME=$$projectName; \
+	docker build . -t $$projectName -f de_projects/$$projectName/operation/Dockerfile --build-arg PROJECT_NAME=$$projectName; \
 	docker run -it --network host --rm $$projectName /bin/bash;
 lint: ## perform linting on a project
 	@echo "Enter project name: "; \

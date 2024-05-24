@@ -1,7 +1,7 @@
 import logging
 
-from job_spy import scrape_jobs
-from _common.gcs import GCSClient
+from jobspy import scrape_jobs
+from de_projects._common.gcs_client import GCSClient
 
 PROJECT_ID = "gcp-practice"
 JOBS_BUCKET = "gcppractice_scratch_data/jobs"
