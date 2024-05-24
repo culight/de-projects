@@ -20,8 +20,11 @@ class LocalStorageClient(StorageBase):
         super().__init__(bucket_name)
 
 class GCSClient(StorageBase):
-    def __init__(self):
-        self.client = storage.Client()
+    def __init__(self, project: str, credentials: str):
+        self.client = storage.Client(
+            project=project,
+            credentials=credentials
+        )
     
     def get_bucket(self, bucket_name: str):
         self.bucket = self.client.get_bucket(bucket_name)
